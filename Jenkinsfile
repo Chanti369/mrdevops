@@ -1,5 +1,8 @@
 pipeline{
     agent any
+    tools{
+        maven 'MAVEN'
+    }
     stages{
         stage('gIt checkout'){
             steps{
@@ -9,11 +12,6 @@ pipeline{
             }
         }
         stage('sonar static code'){
-            agent{
-                docker{
-                    image 'maven'
-                }
-            }
             steps{
                 script{
                     withSonarQubeEnv(credentialsId: 'sonar') {
