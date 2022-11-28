@@ -27,5 +27,12 @@ pipeline{
                 }
             }
         }
+        stage('nexus'){
+            steps{
+                script{
+                    nexusArtifactUploader artifacts: [[artifactId: 'devops-integration', classifier: '', file: 'target/devops-integration.jar', type: 'jar']], credentialsId: 'nexus', groupId: 'com.javatechie', nexusUrl: '65.0.80.94:8081', nexusVersion: 'nexus3', protocol: 'http', repository: 'demoapp-snapshot', version: '0.0.1-SNAPSHOT'
+                }
+            }
+        }
     }
 }
