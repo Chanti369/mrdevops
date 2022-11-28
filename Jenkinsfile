@@ -8,5 +8,19 @@ pipeline{
                 }
             }
         }
+        stage('sonar static code'){
+            agent{
+                docker{
+                    image 'maven'
+                }
+            }
+            steps{
+                script{
+                    withSonarQubeEnv(credentialsId: 'sonar') {
+                        sh 'mvn clean package sonar:sonar'
+                    }    
+                }
+            }
+        }
     }
 }
