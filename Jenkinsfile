@@ -14,7 +14,7 @@ pipeline{
         stage('sonar static code'){
             steps{
                 script{
-                    withSonarQubeEnv(credentialsId: 'sonar') {
+                    withSonarQubeEnv(credentialsId: 'sonar1') {
                         sh 'mvn clean package sonar:sonar'
                     }    
                 }
@@ -23,14 +23,14 @@ pipeline{
         stage('quality gate'){
             steps{
                 script{
-                    waitForQualityGate abortPipeline: false, credentialsId: 'sonar'
+                    waitForQualityGate abortPipeline: false, credentialsId: 'sonar1'
                 }
             }
         }
         stage('nexus'){
             steps{
                 script{
-                    nexusArtifactUploader artifacts: [[artifactId: 'devops-integration', classifier: '', file: 'target/devops-integration.jar', type: 'jar']], credentialsId: 'nexus', groupId: 'com.javatechie', nexusUrl: '65.0.80.94:8081', nexusVersion: 'nexus3', protocol: 'http', repository: 'demoapp-snapshot', version: '0.0.1-SNAPSHOT'
+                    nexusArtifactUploader artifacts: [[artifactId: 'devops-integration', classifier: '', file: 'target/devops-integration.jar', type: 'jar']], credentialsId: 'nexus', groupId: 'com.javatechie', nexusUrl: '65.2.30.12:8081', nexusVersion: 'nexus3', protocol: 'http', repository: 'demoapp-snapshot', version: '1.0.0-SNAPSHOT'
                 }
             }
         }
