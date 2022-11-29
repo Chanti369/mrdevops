@@ -5,5 +5,5 @@ RUN mvn clean install
 
 FROM openjdk:11.0
 WORKDIR /app
-COPY --from=build /app/target/devops-integartion.jar .
-CMD ["java","-jar","devops-integartion.jar"]
+COPY --from=build /app/target/devops-integration.jar .
+CMD ["java","-jar","devops-integration.jar"]
